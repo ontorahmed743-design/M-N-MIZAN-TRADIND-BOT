@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MN MIZAN TRADING BOT</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f0f0f; color: #e0e0e0; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { background-color: #1a1a1a; padding: 30px; border-radius: 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); width: 90%; max-width: 400px; text-align: center; border: 1px solid #00ff88; }
+        h2 { color: #00ff88; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        input, select, button { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; outline: none; box-sizing: border-box; }
+        input, select { background: #2a2a2a; color: white; border: 1px solid #444; }
+        button { background: linear-gradient(45deg, #00ff88, #00bd65); color: #000; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        button:hover { transform: scale(1.02); }
+        #output { margin-top: 25px; padding: 15px; border-radius: 8px; background: #222; min-height: 60px; font-weight: bold; font-size: 1.1em; color: #ffcc00; border-left: 5px solid #00ff88; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🚀 MN MIZAN BOT</h2>
+    
+    <div id="login-section">
+        <input type="password" id="pass" placeholder="পাসওয়ার্ড দিন">
+        <button onclick="checkLogin()">LOGIN</button>
+    </div>
+
+    <div id="trade-section" style="display:none;">
+        <p>মার্কেট নির্বাচন করুন:</p>
+        <select id="market">
+            <option value="USD/BRL (OTC)">USD/BRL (OTC)</option>
+            <option value="EUR/USD (OTC)">EUR/USD (OTC)</option>
+            <option value="GBP/USD (Real)">GBP/USD (Real)</option>
+            <option value="BTC/USDT (Crypto)">BTC/USDT (Crypto)</option>
+            <option value="ETH/USDT">ETH/USDT</option>
+        </select>
+        <button onclick="startAnalysis()">START ANALYSIS</button>
+        <div id="output">সিস্টেম প্রস্তুত...</div>
+    </div>
+</div>
+
+<script>
+    function checkLogin() {
+        const pass = document.getElementById('pass').value;
+        if(pass === "Ontor123@#") {
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('trade-section').style.display = 'block';
+        } else {
+            alert("ভুল পাসওয়ার্ড!");
+        }
+    }
+
+    function startAnalysis() {
+        const market = document.getElementById('market').value;
+        const output = document.getElementById('output');
+        output.style.color = "#ffcc00";
+        output.innerText = market + " এনালাইসিস চলছে...";
+
+        setTimeout(() => {
+            setInterval(() => {
+                const score = Math.floor(Math.random() * 100) + 1;
+                const now = new Date();
+                const timeStr = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+
+                if(score < 25) {
+                    output.style.color = "#00ff88";
+                    output.innerHTML = "[" + timeStr + "] 🔥 UP (BUY ENTRY)";
+                } else if(score > 75) {
+                    output.style.color = "#ff4444";
+                    output.innerHTML = "[" + timeStr + "] 🔥 DOWN (SELL ENTRY)";
+                } else {
+                    output.style.color = "#e0e0e0";
+                    output.innerHTML = "[" + timeStr + "] ⚠️ NEUTRAL (WAIT)";
+                }
+            }, 60000); // প্রতি ১ মিনিটে ১টি সিগন্যাল
+        }, 2000);
+    }
+</script>
+</body>
+</html>
